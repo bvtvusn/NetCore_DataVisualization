@@ -1,0 +1,30 @@
+﻿@page
+@model DataVisualization.Pages.MeasurementModel
+@{
+}
+
+<div>
+	<h1>
+		Measurements for sensor 1
+	</h1>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Measurement Id</th>
+				<th>Value</th>
+				<th>Timestamp</th>
+			</tr>
+			<tbody>
+				@foreach (var datapoint in Model.Datapoints)
+				{
+					<tr>
+						<td> @datapoint.ID</td>
+						<td> @datapoint.Value</td>
+						<td> @datapoint.Timestamp</td>
+					</tr>
+					
+				}
+			</tbody>
+		</thead>
+	</table>
+</div>

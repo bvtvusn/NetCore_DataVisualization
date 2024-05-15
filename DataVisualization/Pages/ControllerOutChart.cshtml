@@ -1,0 +1,47 @@
+﻿@page
+@model DataVisualization.Pages.ControllerOutChartModel
+@{
+    ViewData["Title"] = "Air heater temperature";
+    string chartTitle = "Controller temperatures";
+    string chartUnit = "Celcius";
+}
+
+<div class="text-center">
+    <h1 class="displat-4">Air heater controller output</h1>
+</div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Time', 'Output'],
+                @foreach (var data in Model.pid_chartData2)
+                {
+                    <text>['@data.datetime', @data.c1],</text>
+                }
+   
+            ]);
+
+            var options = {
+                title: 'Controller output',
+                curveType: 'function',
+                legend: { position: 'bottom' },
+                hAxis: {title: "Time"},
+                vAxis: {title: "@chartUnit"}
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('myChart'));
+            chart.draw(data, options);
+
+            //var chart2 = new google.visualization.LineChart(document.getElementById('myChartB'));
+            //chart2.draw(data, options);
+        }
+       
+    </script>
+     <div id="myChart" style="width: 900px; height: 500px">
+     
+     </div>
+

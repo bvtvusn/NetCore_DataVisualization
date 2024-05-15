@@ -1,0 +1,46 @@
+﻿@page
+@model DataVisualization.Pages.ChartModel
+@{
+    ViewData["Title"] = "Air heater temperature";
+    string chartTitle = "Controller temperatures";
+    string chartUnit = "Celcius";
+}
+
+<div class="text-center">
+    <h1 class="displat-4">Air heater temperature</h1>
+</div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Time', 'Setpoint','Measured'],
+                @foreach (var data in Model.pid_chartData)
+                {
+                    <text>['@data.datetime', @data.c1, @data.c2],</text>
+                }
+   
+            ]);
+
+            var options = {
+                title: 'Controller temperature',
+                curveType: 'function',
+                legend: { position: 'bottom' },
+                hAxis: {title: "Time"},
+                vAxis: {title: "@chartUnit"}
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('myChart'));
+            chart.draw(data, options);
+
+            //var chart2 = new google.visualization.LineChart(document.getElementById('myChartB'));
+            //chart2.draw(data, options);
+        }
+       
+    </script>
+     <div id="myChart" style="width: 900px; height: 500px">
+     //<div id="myChartB" style="width: 800px; height: 400px">
+        </div>
